@@ -252,6 +252,7 @@
     align-items: center;
     cursor: pointer;
     transition: .4s; 
+    display: inline-flex;
 }
 
 #btn-new-task:hover{
