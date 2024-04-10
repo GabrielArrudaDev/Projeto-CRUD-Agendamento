@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <title>Gabriel Arruda</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body onload="listarClientes()">
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a href="#" class="navbar-brand mx-4 mb-3">
+                    <h5 class="text-primary"><i class="fa fa-user-edit me-2"></i>Gabriel Arruda</h5>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="img/gabriel-avatar.png" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Gabriel</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="tabela_agendamento.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Agendamento</a>
+                    <a id="tabela_cadastro_nav" href="tabela_cadastro.html" class="nav-item nav-link "><i class="fa fa-laptop me-2"></i>Usuarios</a>
+                    <a href="lista.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>A Fazer</a>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="../index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="navbar-nav align-items-center ms-auto">
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="img/gabriel-avatar.png" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Gabriel</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="../sair.html" class="dropdown-item">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+            <!-- Recent Sales Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary text-center rounded p-4">
+                    <div class="container">
+                        <div class="row mt-3">
+                            <div class="col-8">
+                                <div class="mb-3">
+                                    <label for="txtPesquisar" class="form-label"></label>
+                                    <input type="text" class="form-control" id="txtPesquisar" placeholder="Digite um texto">
+                                </div>
+                            </div>
+                            <div class="col-4" style="margin-top: 30px;">
+                                <button type="button" class="btn btn-warning" onclick="pesquisar()"><i class="bi bi-search"></i> Pesquisar</button>
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cadastroCliente"><i class="bi bi-plus-circle-fill"></i> Novo</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class=" table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Horário</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col">Corte</th>
+                                    <th scope="col">Preço</th>
+                                    <th scope="col">Adicional</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="cadastroCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="bg-secondary modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de Agendamento</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: red;"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="txtNome" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="txtNome" placeholder="Digite o nome">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="txtData" class="form-label">Data</label>
+                                    <input type="date" class="form-control" id="txtData" placeholder="Escolha a data" 
+                                           min="1000-01-01" max="9999-12-31">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="txtHorario" class="form-label">Horário</label>
+                                    <input type="time" class="form-control" id="txtHorario" placeholder="Escolha o horário">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="txtTelefone" class="form-label">Telefone</label>
+                                    <input type="tel" class="form-control" id="txtTelefone" placeholder="(  ) _____-____" oninput="formatarTelefone(this)">
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md">
+                                            <label for="txtCorte" class="form-label">Corte</label>
+                                        <div class="form-floating">
+                                        <select class="form-select" id="floatingSelectGrid">
+                                            <option selected hidden></option>
+                                            <option value="1">Undercut</option>
+                                            <option value="2">Militar</option>
+                                            <option value="3">Moicano</option>
+                                            <option value="4">Razor part</option>
+                                            <option value="5">Disfarçado</option>
+                                            <option value="6">Corte social</option>
+                                            <option value="7">Degrade</option>
+                                            <option value="8">Desenho</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                            <label for="txtPreco" class="form-label">Preço</label>
+                                    <div class="form-floating">
+                                        <select class="form-select" id="floatingSelectGrid1">
+                                        <option selected hidden></option>
+                                        <option value="1">R$ 15,00</option>
+                                        <option value="2">R$ 20,00</option>
+                                        <option value="3">R$ 25,00</option>
+                                        <option value="4">R$ 30,00</option>
+                                        <option value="5">R$ 35,00</option>
+                                        <option value="6">R$ 40,00</option>
+                                        <option value="7">R$ 45,00</option>
+                                        <option value="8">R$ 50,00</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                    <label for="floatingTextarea">Adicional</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="w-100 btn btn-lg btn-primary" type="post" onclick="salvar()">Salvar</button>
+                                </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+                    <script>
+                        
+                        let clientes = [];
+                        const url = "https://653fd58445bedb25bfc15109.mockapi.io/agendamento";
+
+                        function salvar() {
+                        let nome = document.querySelector('#txtNome').value;
+                        let data = document.querySelector('#txtData').value;
+                        let horario = document.querySelector('#txtHorario').value;
+                        let telefone = document.querySelector('#txtTelefone').value;
+                        let corte = document.querySelector('#floatingSelectGrid').selectedIndex;
+                        let preco = document.querySelector('#floatingSelectGrid1').selectedIndex;
+                        let adicional = document.querySelector('#floatingTextarea').value;
+                        let botaoSalvar = document.querySelector("button.btn.btn-primary");
+
+                        // Verifica se algum dos campos está vazio
+                        
+                        if (
+                            nome.trim() === '' ||
+                            data.trim() === '' ||
+                            horario.trim() === '' ||
+                            corte === 0 || // Verifica se o índice é diferente de 0 (caso seja um valor padrão)
+                            preco === 0  // Verifica se o índice é diferente de 0 (caso seja um valor padrão)
+                            
+                        ) {
+                            alert('Preencha todos os campos antes de salvar.');
+                            return;
+                        }if (telefone.replace(/\D/g, '').length !== 11) {
+                            alert('Preencha o número de telefone corretamente.');
+                            return;
+                        }const horaAgendamento = new Date(`${data}T${horario}`).getTime(); // Obtém o timestamp do agendamento
+
+// Verifica se já existe um agendamento exato para o mesmo dia e horário
+const agendamentoMesmoHorario = clientes.find(cliente => cliente.data === data && cliente.horario === horario);
+
+// Verifica se já existe um agendamento muito próximo neste mesmo dia (intervalo menor que 30 minutos)
+const agendamentoProximo = clientes.find(cliente => {
+    const horaExistente = new Date(`${cliente.data}T${cliente.horario}`).getTime();
+    const diferencaMinutos = Math.abs((horaAgendamento - horaExistente) / (60 * 1000)); // Diferença em minutos
+
+    return cliente.data === data && diferencaMinutos < 30; // Verifica se a diferença é menor que 30 minutos
+});
+
+if (agendamentoProximo) {
+    const permitirAgendamento = confirm('Existe um agendamento muito próximo neste mesmo dia. Deseja mesmo assim agendar?');
+    if (!permitirAgendamento) {
+        return;
+    }
+}
+
+// Se não houver agendamento próximo ou agendamento no mesmo horário, prossegue com o salvamento
+if (botaoSalvar.textContent === "Salvar") {
+    let json = { nome, data, horario, telefone, corte, preco, adicional };
+
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(json)
+    }).then(value => {
+        alert('Agendamento realizado com sucesso');
+        listarClientes();
+
+        limparFormularioNovo();
+    });
+} else if (botaoSalvar.textContent === "Alterar") {
+    let id = parseInt(botaoSalvar.dataset.clienteId);
+    alterarCliente(id, nome, data, horario, telefone, corte, preco, adicional);
+}
+                        }
+                    
+                        function listarClientes() {
+                    
+                            fetch(url).then(resposta => resposta.json())
+                                    .then(valor =>{
+                                        clientes = valor
+                                            carregarTabela(clientes)
+                                    })
+                        }
+                        const cortes = {
+                            1: "Undercut",
+                            2: "Militar",
+                            3: "Moicano",
+                            4: "Razor part",
+                            5: "Disfarçado",
+                            6: "Corte social",
+                            7: "Degrade",
+                            8: "Desenho"
+                        };
+                    
+                        const precos = {
+                            1: "R$ 15,00",
+                            2: "R$ 20,00",
+                            3: "R$ 25,00",
+                            4: "R$ 30,00",
+                            5: "R$ 35,00",
+                            6: "R$ 40,00",
+                            7: "R$ 45,00",
+                            8: "R$ 50,00"
+                        };
+                        function formatarData(data) {
+                            const dataObj = new Date(data);
+                            const dataLocal = new Date(dataObj.getTime() + dataObj.getTimezoneOffset() * 60000);
+                            const dia = String(dataLocal.getDate()).padStart(2, '0');
+                            const mes = String(dataLocal.getMonth() + 1).padStart(2, '0'); // Mês é indexado a partir de 0
+                            const ano = dataLocal.getFullYear();
+                            return `${dia}/${mes}/${ano}`;
+                        }
+                    
+                        function carregarTabela(clientes) {
+        let tbody = document.querySelector("#tbody");
+        tbody.innerHTML = ""; // Limpa o conteúdo da tabela
+    
+        clientes.forEach(cli => {
+            let tr = document.createElement("tr");
+            let thId = document.createElement("th");
+            let tdNome = document.createElement("td");
+            let tdData = document.createElement("td");
+            let tdHorario = document.createElement("td");
+            let tdTelefone = document.createElement("td");
+            let tdCorte = document.createElement("td");
+            let tdPreco = document.createElement("td");
+            let tdAdicional = document.createElement("td");
+            let tdAlterar = document.createElement("td");
+            let tdExcluir = document.createElement("td");
+    
+            thId.textContent = cli.id;
+            tdNome.textContent = cli.nome;
+            tdData.textContent = formatarData(cli.data);
+            tdHorario.textContent = cli.horario;
+            tdTelefone.textContent = cli.telefone;
+            tdCorte.textContent = cortes[cli.corte];
+            tdPreco.textContent = precos[cli.preco];
+            tdAdicional.textContent = cli.adicional;
+            
+            let buttonAlterar = document.createElement("button");
+            buttonAlterar.type = "button";
+            buttonAlterar.className = "btn btn-info";
+            buttonAlterar.innerHTML = '<i class="bi bi-pencil-square"></i> Alterar';
+            buttonAlterar.onclick = function () {
+                buscarCliente(cli.id);
+            };
+            
+            let buttonExcluir = document.createElement("button");
+            buttonExcluir.type = "button";
+            buttonExcluir.className = "btn btn-danger";
+            buttonExcluir.innerHTML = '<i class="bi bi-trash"></i> Excluir';
+            buttonExcluir.onclick = function () {
+                excluirCliente(cli.id);
+            };
+    
+            tdAlterar.appendChild(buttonAlterar);
+            tdExcluir.appendChild(buttonExcluir);
+    
+            tr.appendChild(thId);
+            tr.appendChild(tdNome);
+            tr.appendChild(tdData);
+            tr.appendChild(tdHorario);
+            tr.appendChild(tdTelefone);
+            tr.appendChild(tdCorte);
+            tr.appendChild(tdPreco);
+            tr.appendChild(tdAdicional);
+            tr.appendChild(tdAlterar);
+            tr.appendChild(tdExcluir);
+            
+            tbody.appendChild(tr);
+        });
+    }
+    
+    function formatarTelefone(input) {
+    const phoneNumber = input.value.replace(/\D/g, '');
+    let formattedPhoneNumber = '';
+
+    if (phoneNumber.length > 0) {
+        formattedPhoneNumber = '(' + phoneNumber.substring(0, 2);
+
+        if (phoneNumber.length > 2) {
+            formattedPhoneNumber += ') ' + phoneNumber.substring(2, 7);
+
+            if (phoneNumber.length > 7) {
+                formattedPhoneNumber += '-' + phoneNumber.substring(7, 11);
+            }
+        }
+    }
+
+    // Define o valor formatado de volta no input
+    input.value = formattedPhoneNumber;
+
+    // Define o cursor no final do campo
+    input.setSelectionRange(formattedPhoneNumber.length, formattedPhoneNumber.length);
+}
+
+
+
+
+                    function pesquisar() {
+    let textoPesquisa = document.querySelector('#txtPesquisar').value.toLowerCase();
+    let clientesFiltrados = clientes.filter(cli => {
+        return (
+            cli.nome.toLowerCase().includes(textoPesquisa) ||
+            formatarData(cli.data).includes(textoPesquisa) ||
+            (precos[cli.preco] && precos[cli.preco].toLowerCase().includes(textoPesquisa)) ||
+            (cortes[cli.corte] && cortes[cli.corte].toLowerCase().includes(textoPesquisa)) ||
+            (cli.horario && cli.horario.includes(textoPesquisa)) ||
+            (cli.telefone && cli.telefone.includes(textoPesquisa)) // Pesquisa por telefone
+        );
+    });
+    carregarTabela(clientesFiltrados);
+}
+
+    
+                        function excluirCliente(id) {
+                        if (confirm('Tem certeza que deseja excluir este agendamento?')) {
+                            fetch(url + '/' + id, {
+                                method: 'DELETE'
+                            }).then(response => {
+                                if (response.status === 200) {
+                                    alert('Agendamento excluído com sucesso.');
+                                    listarClientes(); 
+                                } else {
+                                    alert('Erro ao excluir agendamento.');
+                                }
+                            });
+                        }
+                    }
+                    function buscarCliente(id) {
+                            let cliente = clientes.find(cli => cli.id == id);
+                            if (cliente) {
+                                document.querySelector('#txtNome').value = cliente.nome;
+                                document.querySelector('#txtData').value = cliente.data;
+                                document.querySelector('#txtHorario').value = cliente.horario;
+                                document.querySelector('#txtTelefone').value = cliente.telefone;
+                                document.querySelector('#floatingSelectGrid').selectedIndex = cliente.corte +0;
+                                document.querySelector('#floatingSelectGrid1').selectedIndex = cliente.preco +0;
+                                document.querySelector('#floatingTextarea').value = cliente.adicional;
+                                let botaoSalvar = document.querySelector("button.btn.btn-primary");
+                                botaoSalvar.textContent = "Alterar";
+                                botaoSalvar.dataset.clienteId = cliente.id;
+                                botaoSalvar.onclick = function () {
+                                    salvar();
+                                };
+                                let meuModal = new bootstrap.Modal(document.getElementById('cadastroCliente'));
+                                meuModal.show();
+                            }
+                        }
+                    
+                    
+                    
+                        function alterarCliente(id, nome, data, horario, telefone, corte, preco, adicional) {
+                            let json = { id, nome, data, horario, telefone, corte, preco, adicional }; 
+                            fetch(url + '/' + id, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(json)
+                            }).then(response => {
+                                if (response.ok) {
+                                    alert('Agendamento alterado com sucesso.');
+                                    listarClientes();
+                                } else {
+                                    alert('Erro ao alterar agendamento.');
+                                }
+                            }).catch(error => {
+                                console.error('Erro na requisição de alteração: ', error);
+                            });
+                        }
+                        let meuModal = new bootstrap.Modal(document.getElementById('cadastroCliente'));
+                        meuModal.hide();
+                    
+                        document.getElementById('cadastroCliente').addEventListener('hidden.bs.modal', function () {
+                            limparFormularioNovo();
+                        });
+                    
+                        function limparFormularioNovo() {
+                            document.querySelector('#txtNome').value = '';
+                            document.querySelector('#txtData').value = '';
+                            document.querySelector('#txtHorario').value = '';
+                            document.querySelector('#txtTelefone').value = '';
+                            document.querySelector('#floatingSelectGrid').value = '';
+                            document.querySelector('#floatingSelectGrid1').value = '';
+                            document.querySelector('#floatingTextarea').value = '';
+                        }
+                    </script>
+                    
+        </div>
+    
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/chart/chart.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+        <!-- Template Javascript -->
+        
+        <script src="js/main.js"></script>
+    </body>
+    
+    </html>
